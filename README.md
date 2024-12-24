@@ -1,2 +1,5 @@
-# spring-microservices
-Spring microservices based on Spring Microservices in Action
+# Spring Microservices
+
+## Introduction
+
+This project is a simple example of a microservices architecture using Spring Boot and Spring Cloud.

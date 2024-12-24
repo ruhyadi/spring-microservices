@@ -1,0 +1,47 @@
+version: "3"
+
+services:
+  java-devel:
+    container_name: java-devel
+    build:
+      context: .
+      dockerfile: dockerfile.devel
+      args:
+        - JAVA_VERSION=21
+        - GRADLE_VERSION=8.7
+        - MAVEN_VERSION=3.8.4
+    volumes:
+      - .:/home/vscode/workspace
+    command: sleep infinity
+    networks:
+      - java-devel-network
+
+  java-postgres:
+    container_name: java-postgres
+    image: postgres:16-alpine
+    restart: always
+    env_file: .env
+    ports:
+      - ${POSTGRES_PORT:-5432}:${POSTGRES_PORT:-5432}
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+    command: -p ${POSTGRES_PORT:-5432}
+    networks:
+      - java-devel-network
+
+  java-redis:
+    container_name: java-redis
+    image: redis:7-alpine
+    restart: always
+    command: redis-server --port ${REDIS_PORT:-6379} --save 20 1 --loglevel warning --requirepass "${REDIS_PASSWORD:-secret}"
+    volumes:
+      - ./data/redis:/data
+    ports:
+      - ${REDIS_PORT:-6379}:${REDIS_PORT:-6379}
+    networks:
+      - java-devel-network
+
+networks:
+  java-devel-network:
+    name: java-devel-network
+    driver: bridge

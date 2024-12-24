@@ -1,0 +1,17 @@
+# args
+ARG JAVA_VERSION=21
+ARG GRADLE_VERSION=8.7
+ARG MAVEN_VERSION=3.8.4
+
+FROM mcr.microsoft.com/devcontainers/java:${JAVA_VERSION}
+
+# check sdkman installation
+RUN bash -c "source /usr/local/sdkman/bin/sdkman-init.sh && sdk version"
+
+# install maven
+RUN bash -c "source /usr/local/sdkman/bin/sdkman-init.sh && sdk install maven ${MAVEN_VERSION}"
+
+# install gradle
+RUN bash -c "source /usr/local/sdkman/bin/sdkman-init.sh && sdk install gradle ${GRADLE_VERSION}"
+
+CMD [ "bash" ]
