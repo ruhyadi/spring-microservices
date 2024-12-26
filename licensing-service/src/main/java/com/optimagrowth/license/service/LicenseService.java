@@ -71,6 +71,7 @@ public class LicenseService {
 			break;
 		default:
 			organization = organizationRestClient.getOrganization(organizationId);
+			break;
 		}
 
 		return organization;

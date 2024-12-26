@@ -37,7 +37,7 @@ public class LicenseServiceApplication {
 		messageSource.setBasenames("messages");
 		return messageSource;
 	}
-	
+
 	@LoadBalanced
 	@Bean
 	public RestTemplate getRestTemplate(){
